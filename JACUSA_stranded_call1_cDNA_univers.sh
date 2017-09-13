@@ -9,7 +9,7 @@ export INP1=$1
 export OUT=$2
 #-RRDs------------
 
-java -Xmx20g -jar /home/cdieterich/software/JACUSA_v1.2.0.jar call-1 -s -c 5 -P FR-SECONDSTRAND -p 10 -W 1000000 --filterNM_1 5 -T 1 -a D,M,Y -r ${OUT} ${INP1}
+java -Xmx20g -jar /home/cdieterich/software/JACUSA_v1.2.0-beta1.jar call-1 -s -c 5 -P FR-FIRSTSTRAND -p 10 -W 1000000 --filterNM_1 1 -T 1 -a D,M,Y -r ${OUT} ${INP1}
 
 #OK.. we should produce EnsEMBL variant format
 #1 182712 182712 A/C 1
