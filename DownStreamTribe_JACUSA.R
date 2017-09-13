@@ -54,6 +54,6 @@ writeDataTable(wb, sheet = 2, x=data.frame(jacusaCond))
 addWorksheet(wb, sheetName = "Site_report");
 writeDataTable(wb, sheet = 3, x=data.frame(jacusa.site))
 
-write.table(unique(data.frame(jacusa.site[,c("Chr","End","End")],ifelse(jacusa.site[,"Strand"]=="+","A/G","T/C"),1)),file= paste0(gsub(".txt","",args[2]),".vep"),quote=F,sep="\t",append=F, row.names=F, col.names=F)
+write.table(unique(data.frame(jacusa.site[,c("Chr","End","End")],ifelse(jacusa.site[,"Strand"]=="+","A/G","T/C"),"+")),file= paste0(gsub(".txt","",args[2]),".vep"),quote=F,sep="\t",append=F, row.names=F, col.names=F)
 
 saveWorkbook(wb, paste0(gsub(".txt","",args[1]),".xlsx"), overwrite=T)
