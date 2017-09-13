@@ -23,7 +23,7 @@ for(my $x=6; $x<(6+$cond1+$cond2); $x++)
 
 my $flag = 0;
 
-for(my $x=6; $x<(6+$cond1); $x++)
+for(my $x=6; $x<(6+$cond1+$cond2); $x++)
   {
     $flag=1 if ($tmp[$x] eq 'FALSE');
   }
