@@ -2,6 +2,7 @@
 
 The idea of this workflow is to prepare input for JACUSA call-1 and call-2
 from HISAT2 alignment bam files using a sample sheet, which resembles the cufflinks one.
+Please bear in mind that the current workflow only handles stranded RNA-seq data (fr-firststrand).
 
 ```
 perl ./prepare_for_JACUSA.pl bams_for_JACUSA.txt
@@ -50,26 +51,26 @@ COND2=""
 cat ${INP} |perl ~/scripts/JACUSA_to_TRIBE.pl 3 3 > ${INP}"_A2G"
 ```
 
+### Prepare reference annotation and overlap with JACUSA predictions
+
+```
 awk '($3~/exon/){print;}($3~/utr/){print;}($3~/CDS/){print;}($3~/codon/){print;}' /biodb/genomes/homo_sapiens/GRCh38_85/GRCh38.85.gtf > annotation_85.gtf
 
 srun bedtools intersect -a ${PREFIX} -s -b annotation_85.gtf -loj > ${PREFIX}"_sense.txt"
 
 srun bedtools intersect -a ${PREFIX} -S -b annotation_85.gtf -loj > ${PREFIX}"_antisense.txt"
+```
 
- annotate JACUSA - how many conditions.
-perl ~/scripts/annotateJACUSAsites.pl ${PREFIX}"_sense.txt" 3 3
+### annotate JACUSA - how many conditions.
 
-R
-~/scripts/DownStreamTribe_JACUSA.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  GFP_3 GS_3
+```
+perl ./annotateJACUSAsites.pl ${PREFIX}"_sense.txt" 3 3
+```
 
-VEP - produce output - 1 182712 182712 A/C 1
+### invoke R script to produce xlsx and VEP formatted output
 
-Output for Sequence generation
+```
+./DownStreamTribe_JACUSA.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  GFP_3 GS_3
+```
 
-INP="call2_GFP_GS"
-PREFIX=${INP}"_A2G"
-COND1=""
-COND2=""
-
-cat ${INP} |perl ~/scripts/JACUSA_to_TRIBE.pl 3 3 > ${INP}"_A2G"
 
