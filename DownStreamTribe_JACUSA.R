@@ -46,7 +46,7 @@ addWorksheet(wb, sheetName = "Condensed_report");
 SumScore=tapply(jacusa[,3],jacusa[,1],sum)
 sites=tapply(jacusa[,2],jacusa[,1],paste,collapse=",")
 
-jacusaCond=data.frame(ID=names(sites),sites,SumScore);
+jacusaCond=data.frame(ID=names(sites),Sites=sites,SumScore=as.numeric(SumScore));
 jacusaCond=merge(jacusaCond, resMArt, by.x=1, by.y=1)
     
 writeDataTable(wb, sheet = 2, x=data.frame(jacusaCond))
