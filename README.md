@@ -17,7 +17,23 @@ The command line call above will do the following
 4. Call JACUSA on individual conditions "call-1"
 5. Call JACUSA on pairwise comparisons of conditions "call-2"
 
-catch A->I JACUSA
+### Expected results
+
+Every entry in *bams_for_JACUSA.txt* e.g.
+
+```
+/somewhere/K002000078_52278_HISATmapping/Aligned.out.bam        day30_cntrl
+```
+
+will be processed to generate some new files such as:
+
+```
+K002000078_52278_HISATmapping.bam (soft link)
+K002000078_52278_HISATmapping.bam.bai (soft link)
+K002000078_52278_HISATmapping_uniq.bam
+K002000078_52278_HISATmapping_uniq_rmdup.bam
+```
+and the respective comparisons
 
 INP="call2_GFP_GS"
 PREFIX=${INP}"_A2G"
