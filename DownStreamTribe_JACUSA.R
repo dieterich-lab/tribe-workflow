@@ -1,4 +1,13 @@
 #!/usr/bin/env Rscript
+
+list.of.packages <- c("biomaRt", "openxlsx")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) {
+	#install.packages(new.packages)
+	source("https://bioconductor.org/biocLite.R")
+	biocLite(new.packages)
+}
+
 args = commandArgs(trailingOnly=TRUE)
 
 if (length(args)!=4) {
