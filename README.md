@@ -15,7 +15,7 @@ It is important to understand that two types of sequencing data comparisons coul
 
 ## Basic steps
 
-The command line call above will do the following
+Generally, all BAM files will be pre-processed according to the procedure detailed below
 
 1. Filter read mapping by mapping quality MapQ (>=20)
 2. Mark Duplicates (with picard tools) 
@@ -24,7 +24,7 @@ The command line call above will do the following
 
 ### Expected results
 
-Every entry in *bams_for_JACUSA.txt* e.g.
+Every entry in a sample sheet *bams_for_JACUSA.txt* e.g.
 
 ```
 /somewhere/K002000078_52278_HISATmapping/Aligned.out.bam        day30_cntrl
@@ -42,7 +42,9 @@ and the respective comparisons.
 
 ## Downstream processing
 
-In this example, we will just concentrate on RNA-RNA comparisons to discover *RRDs*
+If we did a DNA-RNA comparison in Drosophila Schneider cells
+using publicly available data from *Mechanistic Implications of Enhanced Editing by a HyperTRIBE RNA-binding protein*
+<https://www.ncbi.nlm.nih.gov/pubmed/29127211>
 
 ### collect A->I events from JACUSA call2 output
 
