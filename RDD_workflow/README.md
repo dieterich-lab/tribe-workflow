@@ -1,4 +1,4 @@
-##Produce call2 output from JACUSA with the help of prepare_for_JACUSA_gDNA.pl
+# Produce call2 output from JACUSA with the help of prepare_for_JACUSA_gDNA.pl
 
 ### catch A->I events from JACUSA output
 
@@ -8,21 +8,22 @@ PREFIX=${INP}"_A2G"
 COND1=$(echo $INP | cut -f2 -d _ )
 COND2=$(echo $INP | cut -f3 -d _ )
 
-cat ${INP} |perl ~/scripts/JACUSA_to_TRIBE_gDNA.pl 1 2 > ${INP}"_A2G"
+cat ${INP} |perl RDD_workflow/JACUSA_to_TRIBE_gDNA.pl 1 2 > ${INP}"_A2G"
 
 ```
 
-#overlap with annotation 
+### overlap with annotation
+```
 srun bedtools intersect -a ${PREFIX} -s -b final_annotation_85.gtf -loj > ${PREFIX}"_sense.txt"
+```
 
-# annotate JACUSA - how many conditions.
-perl ~/scripts/annotateJACUSAsites.pl ${PREFIX}"_sense.txt" 1 2
+### annotate JACUSA - how many conditions.
+```
+perl RDD_workflow/annotateJACUSAsites.pl ${PREFIX}"_sense.txt" 1 2
+```
 
-#R
-#~/repository/tribe-workflow/DownStreamTribe_JACUSA.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  ${COND1}"_3" ${COND2}"_3"
+### call to R - produce output such as Excel spreadsheet, VEP and BED files
+```
 srun ~/scripts/DownStreamTribe_JACUSA_Yves.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  ${COND1}"_1" ${COND2}"_2"
-
-#srun ~/repository/tribe-workflow/DownStreamTribe_JACUSA.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  ${COND1}"_1" ${COND2}"_2"
-
-#VEP - produce output - 1 182712 182712 A/C 1
+```
 
