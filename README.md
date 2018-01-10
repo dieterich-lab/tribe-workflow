@@ -9,10 +9,9 @@ It is important to understand that two types of sequencing data comparisons coul
 * RNA-DNA comparisons (if genomics sequencing data is available)
 * RNA-RNA comparisons (classical TRIBE; ctrl condition vs condition of interest)
 
-```
-perl ./prepare_for_JACUSA.pl sample_sheet.txt
-```
-
+> The respective workflows are found in
+> the RDD_workflow subfolder and
+> the RRD_workflow subfolder
 
 ## Basic steps
 
