@@ -1,12 +1,16 @@
 # Tentative TRIBE / editing workflow
 
-The idea of this workflow is to prepare input for JACUSA call-1 and call-2
+The idea of this workflow is to prepare input for JACUSA call-2
 from HISAT2 alignment bam files using a sample sheet, which resembles the cufflinks one.
 Please bear in mind that the current workflow only handles stranded RNA-seq data (fr-firststrand).
 
+It is important to understand that RNA-DNA comparisons can be made if genome sequencing data is available.
+=> This is the RDD_workflow
+
 ```
-perl ./prepare_for_JACUSA.pl bams_for_JACUSA.txt
+perl ./prepare_for_JACUSA.pl sample_sheet.txt
 ```
+
 
 ## Basic steps
 
@@ -15,8 +19,7 @@ The command line call above will do the following
 1. Filter read mapping by mapping quality MapQ (>=20)
 2. Mark Duplicates (with picard tools) 
 3. Generate new bam files and index files
-4. Call JACUSA on individual conditions "call-1"
-5. Call JACUSA on pairwise comparisons of conditions "call-2"
+4. Call JACUSA on pairwise comparisons of conditions "call-2"
 
 ### Expected results
 
