@@ -10,8 +10,8 @@ It is important to understand that two types of sequencing data comparisons coul
 * RNA-RNA comparisons (classical TRIBE; ctrl condition vs condition of interest)
 
 > The respective workflows are found in
-> the RDD_workflow subfolder and
-> the RRD_workflow subfolder
+> the RDD_workflow subfolder <https://github.com/dieterich-lab/tribe-workflow/tree/master/RDD_workflow> and
+> the RRD_workflow subfolder <https://github.com/dieterich-lab/tribe-workflow/tree/master/RRD_workflow>
 
 ## Basic steps
 
