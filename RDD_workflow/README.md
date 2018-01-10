@@ -24,6 +24,6 @@ perl RDD_workflow/annotateJACUSAsites.pl ${PREFIX}"_sense.txt" 1 2
 
 ### call to R - produce output such as Excel spreadsheet, VEP and BED files
 ```
-srun ~/scripts/DownStreamTribe_JACUSA_Yves.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  ${COND1}"_1" ${COND2}"_2"
+srun RDD_workflow/DownStreamTribe_JACUSA_Yves.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  ${COND1}"_1" ${COND2}"_2"
 ```
 
