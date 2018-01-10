@@ -4,8 +4,10 @@ The idea of this workflow is to prepare input for JACUSA call-2
 from HISAT2 alignment bam files using a sample sheet, which resembles the cufflinks one.
 Please bear in mind that the current workflow only handles stranded RNA-seq data (fr-firststrand).
 
-It is important to understand that RNA-DNA comparisons can be made if genome sequencing data is available.
-=> This is the RDD_workflow
+It is important to understand that two types of sequencing data comparisons could be made
+
+* RNA-DNA comparisons (if genomics sequencing data is available)
+* RNA-RNA comparisons (classical TRIBE; ctrl condition vs condition of interest)
 
 ```
 perl ./prepare_for_JACUSA.pl sample_sheet.txt
