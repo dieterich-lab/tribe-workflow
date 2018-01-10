@@ -96,4 +96,6 @@ srun RDD_workflow/DownStreamTribe_JACUSA_Yves.R ${PREFIX}"_sense.txt_one_gene_pr
 2. JAVA 1.8+ 
 3. Picard tools for MarkDuplicates <http://broadinstitute.github.io/picard>
 4. JACUSA release 1.2.2 <https://github.com/dieterich-lab/JACUSA/releases/tag/1.2.2>
+5. bedtools (bedtools v2.26.0)
+6. R (3.3.1+)
 
