@@ -46,37 +46,48 @@ If we did a DNA-RNA comparison in Drosophila Schneider cells
 using publicly available data from *Mechanistic Implications of Enhanced Editing by a HyperTRIBE RNA-binding protein*
 <https://www.ncbi.nlm.nih.gov/pubmed/29127211>
 
-### collect A->I events from JACUSA call2 output
+### collect A->I events from JACUSA call2 output (DNA vs RNA)
 
 ```
-INP="call2_condition1_condition2"
-PREFIX=${INP}"_A2G"
-COND1=""
-COND2=""
+INP="call2_DNA_E488Q_ADARcd_s2"
 
-cat ${INP} |perl ~/scripts/JACUSA_to_TRIBE.pl 3 3 > ${INP}"_A2G"
+cat ${INP} |perl RDD_workflow/JACUSA_to_TRIBE_gDNA.pl 1 2 > ${INP}"_A2G"
 ```
 
 ### Prepare reference annotation and overlap with JACUSA predictions
 
 ```
-awk '($3~/exon/){print;}($3~/utr/){print;}($3~/CDS/){print;}($3~/codon/){print;}' /biodb/genomes/homo_sapiens/GRCh38_85/GRCh38.85.gtf > annotation_85.gtf
+INP="/biodb/genomes/drosophila_melanogaster/BDGP6_85/BDGP6.85.gtf";
+module load bedtools
 
-srun bedtools intersect -a ${PREFIX} -s -b annotation_85.gtf -loj > ${PREFIX}"_sense.txt"
+#retrieve exonic elements
+awk '($3~/exon/){print;}($3~/utr/){print;}($3~/CDS/){print;}($3~/codon/){print;}' ${INP} > annotation_85.gtf
 
-srun bedtools intersect -a ${PREFIX} -S -b annotation_85.gtf -loj > ${PREFIX}"_antisense.txt"
+#generate introns
+awk '($3~/exon/){print;}' ${INP} >exon_annotation_85.gtf
+awk '($3~/gene/){print;}' ${INP} >gene_annotation_85.gtf
+sort -k1,1 -k4,4n exon_annotation_85.gtf > exon_sorted.gtf
+srun bedtools merge -i exon_sorted.gtf -s > exon_merged_85.gtf
+srun bedtools subtract -a gene_annotation_85.gtf -b exon_merged_85.gtf| awk 'BEGIN{FS="\t";}{gsub("gene","intron",$3); print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8"\t"$9;}' > intronic_merged_85.gtf
+
+#merge exonic and intronic annotation
+cat annotation_85.gtf intronic_merged_85.gtf |sort -k1,1 -k4,4n >tempo
+mv tempo final_annotation_85.gtf
+
+srun bedtools intersect -a ${PREFIX} -s -b final_annotation_85.gtf -loj > ${PREFIX}"_sense.txt"
 ```
 
 ### annotate JACUSA - how many conditions.
 
 ```
-perl ./annotateJACUSAsites.pl ${PREFIX}"_sense.txt" 3 3
+perl RDD_workflow/annotateJACUSAsites.pl ${PREFIX}"_sense.txt" 1 2
 ```
 
 ### invoke R script to produce xlsx and VEP formatted output
 
 ```
-./DownStreamTribe_JACUSA.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  GFP_3 GS_3
+module load R
+srun RDD_workflow/DownStreamTribe_JACUSA_Yves.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  DNA_1 E488Q_ADARcd_s2_2
 ```
 
 
