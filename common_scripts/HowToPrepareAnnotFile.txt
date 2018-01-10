@@ -1,0 +1,18 @@
+#Prepare annotation
+INP="/biodb/genomes/homo_sapiens/GRCh38_85/GRCh38.85.gtf";
+
+#retrieve exonic elements
+awk '($3~/exon/){print;}($3~/utr/){print;}($3~/CDS/){print;}($3~/codon/){print;}' ${INP} > annotation_85.gtf
+
+#generate introns
+awk '($3~/exon/){print;}' ${INP} >exon_annotation_85.gtf
+awk '($3~/gene/){print;}' ${INP} >gene_annotation_85.gtf
+sort -k1,1 -k4,4n exon_annotation_85.gtf > exon_sorted.gtf
+srun bedtools merge -i exon_sorted.gtf -s > exon_merged_85.gtf
+srun bedtools subtract -a gene_annotation_85.gtf -b exon_merged_85.gtf| awk 'BEGIN{FS="\t";}{gsub("gene","intron",$3); print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8"\t"$9;}' > intronic_merged_85.gtf
+
+#merge exonic and intronic annotation
+cat annotation_85.gtf intronic_merged_85.gtf |sort -k1,1 -k4,4n >tempo
+mv tempo final_annotation_85.gtf
+
+#

@@ -1,0 +1,9 @@
+/prj/Yves_Roignant/public_HyperTRIBE/workflow/mapping/SRR5944746_HISAT2mapping/Aligned.out.bam	Hrp48_TRIBE_s2
+/prj/Yves_Roignant/public_HyperTRIBE/workflow/mapping/SRR5944747_HISAT2mapping/Aligned.out.bam	Hrp48_TRIBE_s2
+/prj/Yves_Roignant/public_HyperTRIBE/workflow/mapping/SRR5944748_HISAT2mapping/Aligned.out.bam	Hrp48_HyperTRIBE_s2
+/prj/Yves_Roignant/public_HyperTRIBE/workflow/mapping/SRR5944749_HISAT2mapping/Aligned.out.bam	Hrp48_HyperTRIBE_s2
+/prj/Yves_Roignant/public_HyperTRIBE/workflow/mapping/SRR5944750_HISAT2mapping/Aligned.out.bam	E488Q_ADARcd_s2
+/prj/Yves_Roignant/public_HyperTRIBE/workflow/mapping/SRR5944751_HISAT2mapping/Aligned.out.bam	E488Q_ADARcd_s2
+/prj/Yves_Roignant/public_HyperTRIBE/workflow/mapping/SRR5944759_HISAT2mapping/Aligned.out.bam	FMRP_HyperTRIBE_s2
+/prj/Yves_Roignant/public_HyperTRIBE/workflow/mapping/SRR5944760_HISAT2mapping/Aligned.out.bam	FMRP_HyperTRIBE_s2
+/prj/Yves_Roignant/public_HyperTRIBE/workflow_DNA/gDNA_s2_TRIBE_HISATmapping/Aligned.out.bam	DNA
