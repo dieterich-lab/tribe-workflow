@@ -18,7 +18,7 @@ It is important to understand that two types of sequencing data comparisons coul
 Generally, all BAM files will be pre-processed according to the procedure detailed below
 
 1. Filter read mapping by mapping quality MapQ (>=20)
-2. Mark Duplicates (with picard tools) 
+2. Mark Duplicates (with picard tools)
 3. Generate new bam files and index files
 4. Call JACUSA on pairwise comparisons of conditions "call-2"
 
@@ -57,7 +57,7 @@ cat ${INP} |perl RDD_workflow/JACUSA_to_TRIBE_gDNA.pl 1 2 > ${INP}"_A2G"
 ### Prepare reference annotation and overlap with JACUSA predictions
 
 ```
-INP="/biodb/genomes/drosophila_melanogaster/BDGP6_85/BDGP6.85.gtf";
+INP="drosophila_melanogaster/BDGP6_85/BDGP6.85.gtf";
 module load bedtools
 
 #retrieve exonic elements
@@ -67,14 +67,14 @@ awk '($3~/exon/){print;}($3~/utr/){print;}($3~/CDS/){print;}($3~/codon/){print;}
 awk '($3~/exon/){print;}' ${INP} >exon_annotation_85.gtf
 awk '($3~/gene/){print;}' ${INP} >gene_annotation_85.gtf
 sort -k1,1 -k4,4n exon_annotation_85.gtf > exon_sorted.gtf
-srun bedtools merge -i exon_sorted.gtf -s > exon_merged_85.gtf
-srun bedtools subtract -a gene_annotation_85.gtf -b exon_merged_85.gtf| awk 'BEGIN{FS="\t";}{gsub("gene","intron",$3); print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8"\t"$9;}' > intronic_merged_85.gtf
+bedtools merge -i exon_sorted.gtf -s > exon_merged_85.gtf
+bedtools subtract -a gene_annotation_85.gtf -b exon_merged_85.gtf| awk 'BEGIN{FS="\t";}{gsub("gene","intron",$3); print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8"\t"$9;}' > intronic_merged_85.gtf
 
 #merge exonic and intronic annotation
 cat annotation_85.gtf intronic_merged_85.gtf |sort -k1,1 -k4,4n >tempo
 mv tempo final_annotation_85.gtf
 
-srun bedtools intersect -a ${PREFIX} -s -b final_annotation_85.gtf -loj > ${PREFIX}"_sense.txt"
+bedtools intersect -a ${PREFIX} -s -b final_annotation_85.gtf -loj > ${PREFIX}"_sense.txt"
 ```
 
 ### annotate JACUSA - how many conditions.
@@ -86,16 +86,14 @@ perl RDD_workflow/annotateJACUSAsites.pl ${PREFIX}"_sense.txt" 1 2
 ### invoke R script to produce xlsx and VEP formatted output
 
 ```
-module load R
-srun RDD_workflow/DownStreamTribe_JACUSA_Yves.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  DNA_1 E488Q_ADARcd_s2_2
+./RDD_workflow/DownStreamTribe_JACUSA_Yves.R ${PREFIX}"_sense.txt_one_gene_processed_sense.txt" ${PREFIX}"_sense.txt_one_site_processed_sense.txt"  DNA_1 E488Q_ADARcd_s2_2
 ```
 
 ## Dependencies
 
 1. UNIX commandline shell (bash)
-2. JAVA 1.8+ 
+2. JAVA 1.8+
 3. Picard tools for MarkDuplicates <http://broadinstitute.github.io/picard>
 4. JACUSA release 1.2.2 <https://github.com/dieterich-lab/JACUSA/releases/tag/1.2.2>
-5. bedtools (bedtools v2.26.0)
+5. bedtools (bedtools v2.26.0)  <https://github.com/arq5x/bedtools2/releases/tag/v2.26.0>
 6. R (3.3.1+)
-
