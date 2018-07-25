@@ -58,7 +58,6 @@ cat ${INP} |perl RDD_workflow/JACUSA_to_TRIBE_gDNA.pl 1 2 > ${INP}"_A2G"
 
 ```
 INP="drosophila_melanogaster/BDGP6_85/BDGP6.85.gtf";
-module load bedtools
 
 #retrieve exonic elements
 awk '($3~/exon/){print;}($3~/utr/){print;}($3~/CDS/){print;}($3~/codon/){print;}' ${INP} > annotation_85.gtf
